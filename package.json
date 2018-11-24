@@ -1,0 +1,27 @@
+{
+  "name": "tfjs-vis-node",
+  "version": "0.0.1",
+  "description": "Extension to tfjs-vis to allow the visualization to be rendered to virtual DOM; for use in node or related environment like Jupyter iJavascript notebooks",
+  "main": "./dist/test.js",
+  "dependencies": {
+    "@types/jsdom": "^12.2.0",
+    "jsdom": "^13.0.0",
+    "@tensorflow/tfjs": "^0.13.4",
+    "@tensorflow/tfjs-vis": "^0.3.0"
+  },
+  "devDependencies": {
+    "typescript": "^3.1.6"
+  },
+  "peerDependencies": {
+    "@types/jsdom": "^12.2.0",
+    "jsdom": "^13.0.0",
+    "@tensorflow/tfjs": "^0.13.4",
+    "@tensorflow/tfjs-vis": "^0.3.0"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc watch"
+  },
+  "author": "",
+  "license": "ISC"
+}
