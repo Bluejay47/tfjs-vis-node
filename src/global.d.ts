@@ -3,6 +3,8 @@ declare module NodeJS  {
         document: any,
         window: any,
         HTMLElement: any,
-        requestAnimationFrame: Function
+        requestAnimationFrame: Function,
+        cancelAnimationFrame: Function,
+        lastTime: number
     }
 }

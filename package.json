@@ -5,17 +5,14 @@
   "main": "./dist/test.js",
   "dependencies": {
     "@types/jsdom": "^12.2.0",
-    "jsdom": "^13.0.0",
-    "@tensorflow/tfjs": "^0.13.4",
-    "@tensorflow/tfjs-vis": "^0.3.0"
+    "canvas": "^2.1.0",
+    "jsdom": "^13.0.0"
   },
   "devDependencies": {
     "typescript": "^3.1.6"
   },
   "peerDependencies": {
-    "@types/jsdom": "^12.2.0",
-    "jsdom": "^13.0.0",
-    "@tensorflow/tfjs": "^0.13.4",
+    "@tensorflow/tfjs": "^0.13.5",
     "@tensorflow/tfjs-vis": "^0.3.0"
   },
   "scripts": {
@@ -23,5 +20,5 @@
     "dev": "tsc watch"
   },
   "author": "",
-  "license": "ISC"
+  "license": "Apache-2.0"
 }

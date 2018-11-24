@@ -30,6 +30,7 @@ const dom = new JSDOM(DEFAULT_HTML, {
   resources: 'usable',
   includeNodeLocations: true,
   contentType: "text/html",
+  runScripts: "dangerously"
 });
 const window = dom.window;
 const document = dom.window.document;
@@ -37,15 +38,40 @@ const document = dom.window.document;
 global.document = document;
 global.window = window;
 global.HTMLElement = window.HTMLElement;
+global.lastTime = 0;
 
-global.requestAnimationFrame = function() {
-  var vendors = ['ms', 'moz', 'webkit', 'o'];
-  for(var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
-      window.requestAnimationFrame = window[vendors[x]+'RequestAnimationFrame'];
-      window.cancelAnimationFrame = window[vendors[x]+'CancelAnimationFrame'] 
-                                 || window[vendors[x]+'CancelRequestAnimationFrame'];
+//Polyfill for requestAnimationFrame();
+(function() {
+
+  if (window.requestAnimationFrame) {
+    global.requestAnimationFrame = window.requestAnimationFrame;
   }
-}
+
+  if (window.cancelAnimationFrame) {
+    global.cancelAnimationFrame = window.cancelAnimationFrame;
+  }
+
+  if (!global.requestAnimationFrame) {
+
+    global.requestAnimationFrame = function(callback) {
+        var currTime = Date.now();
+        var timeToCall = Math.max(0, 16 - (currTime - global.lastTime));
+        let id = window.setTimeout(function() { callback(currTime + timeToCall); }, timeToCall);
+        global.lastTime = currTime + timeToCall;
+        return id;
+    };
+    
+  }
+
+  if (!global.cancelAnimationFrame) {
+
+    global.cancelAnimationFrame = function(id) {
+      clearTimeout(id);
+    };
+
+  }
+
+}());
 
 /**
  * The primary interface to the visor is the visor() function.
@@ -139,14 +165,33 @@ export function visor(): Visor {
 }
 
 export function renderHTML() {
-
-  let item:Element|null = document.querySelector("[data-glamor]");
-
-  //  if (item != null) {
-  //    return (<HTMLElement>item).dataset.glamor;
-  //  } else {
-  //    return false;
-  //  }
   return dom.serialize();
+}
+
+export function renderCSS() {
+
+let item:Element|null = document.querySelector(".css-gqudy6");
+
+  let stylesText:string = "";
+
+  for (let i=0; i < document.styleSheets.length; i++) {
+
+    let styleSheet:CSSStyleSheet = <CSSStyleSheet>document.styleSheets[i];
+    let styles = styleSheet.cssRules;
+
+    for (let i=0; i < styles.length; i++) {
+
+        let rule:CSSRule|null = styles[i];
+
+        if (rule != null) {
+          stylesText += rule.cssText;
+        }
+
+    }
+
+  }
+
+  return stylesText;
 
 }
+

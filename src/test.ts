@@ -12,5 +12,7 @@ const data = [
 const surface = tfvisNode.visor().surface({ name: 'Barchart', tab: 'Charts' });
 
 // Render a barchart on that surface
-tfvisNode.render.barchart(data, surface, {});
-console.log(tfvisNode.renderHTML());
+tfvisNode.render.barchart(data, surface, {}).then (() => {
+  console.log(tfvisNode.renderHTML());
+  //console.log(tfvisNode.renderCSS());
+});

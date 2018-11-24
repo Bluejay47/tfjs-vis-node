@@ -37,6 +37,7 @@ const show = {
 
 export {visor} from './VisorNode';
 export {renderHTML} from './VisorNode';
+export {renderCSS} from './VisorNode';
 export {render};
 export {metrics};
 export {show};
